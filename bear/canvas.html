@@ -16,11 +16,9 @@
 </head>
 
 <body>
-    <form>
         <label>
-            <input name="dialog" value="非常好!">
+            <input id="content" name="dialog" value="非常好" style="font-size: 26px; width: 256px;" maxlength="5">
         </label>
-    </form>
     <div id="container">
         <canvas id="imageView" width="256" height="256" />
     </div>
@@ -53,7 +51,6 @@
                         return;
                     }
 
-                    canvas.addEventListener('click', ev_mouseclick, false);
 
                     img.addEventListener("load", function() {
                         clearCanvas();
@@ -77,36 +74,42 @@
                                 };            
                                 reader.readAsDataURL(file);        
                             }    
-                        }    
+                        }
+                        doodle(185, 50);
                         evt.preventDefault();
                     }, false);   
                 }
 
                 var clearCanvas = function() {                
-                    context.clearRect(0, 0, canvas.width, canvas.height);            
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.drawImage(img, 0, 0);      
                 };
-                var i = 0;
-                function ev_mouseclick(ev) {
-                    var x, y;
 
-                    // Get the mouse position relative to the canvas element.
-                    if (ev.layerX || ev.layerX == 0) { // Firefox
-                        x = ev.layerX;
-                        y = ev.layerY;
-                    } else if (ev.offsetX || ev.offsetX == 0) { // Opera
-                        x = ev.offsetX;
-                        y = ev.offsetY;
+                var content = document.getElementById('content');
+                function doodle(x, y) {
+                    clearCanvas();
+                    var text = content.value.split('');
+                    var size = 26;
+                    if (text.length == 3)
+                        size = 26
+                    else if (text.length == 4)
+                        size = 22
+                    else if (text.length == 5)
+                        size = 18
+                    context.font = size + "px Georgia";
+
+                    for (var i = 0; i < text.length; i++) {
+                        context.fillText(text[i], x, y + i * (size + 8));
                     }
-
-                    var text = document.forms[0].dialog.value;
-
-                    if (i == text.length) {
-                        i=0;
-                    }
-
-                    context.font="26px Georgia";
-                    context.fillText(text[i++], x, y);
                 }
+
+                function ev_doodle(evt) {
+                    doodle(185, 50);
+                    evt.preventDefault();
+                    return false;
+                }                
+
+                content.addEventListener('keyup', ev_doodle, false);
                 init();
             },
             false);
