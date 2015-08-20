@@ -20,10 +20,11 @@
             <input id="content" name="dialog" value="非常好" style="font-size: 26px; width: 256px;" maxlength="5">
         </label>
     <div id="container">
-        <canvas id="imageView" width="256" height="256" />
+        <canvas id="imageView" width="256" height="256" onclick="download()"/>
     </div>
     <script>
     // Keep everything in anonymous function, called on window load.
+    var download = {};
     if (window.addEventListener) {
         window.addEventListener('load', function() {
                 var canvas, context, img;
@@ -78,6 +79,11 @@
                         doodle(185, 50);
                         evt.preventDefault();
                     }, false);   
+                }
+
+                download = function() {
+                    var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                    window.location.href=image; // it will save locally
                 }
 
                 var clearCanvas = function() {                
