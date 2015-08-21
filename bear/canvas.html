@@ -83,7 +83,10 @@
 
                 download = function() {
                     var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                    window.location.href=image; // it will save locally
+                    var link = document.createElement('a');
+                    link.href = image;
+                    link.download = 'bear.png';
+                    link.click();
                 }
 
                 var clearCanvas = function() {                
