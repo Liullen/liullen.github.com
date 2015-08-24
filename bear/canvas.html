@@ -20,8 +20,9 @@
             <input id="content" name="dialog" value="非常好" style="font-size: 26px; width: 256px;" maxlength="5">
         </label>
     <div id="container">
-        <canvas id="imageView" width="256" height="256" onclick="download()"/>
+        <canvas id="imageView" width="256" height="256"/>
     </div>
+    <a href="javascript:download();" style="font-size: 26px;">儲存圖片</a>
     <script>
     // Keep everything in anonymous function, called on window load.
     var download = {};
@@ -82,7 +83,7 @@
                 }
 
                 download = function() {
-                    var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                    var image = canvas.toDataURL("image/png");
                     var link = document.createElement('a');
                     link.href = image;
                     link.download = 'bear.png';
