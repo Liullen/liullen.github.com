@@ -16,11 +16,11 @@
 </head>
 
 <body>
-        <label>
-            <input id="content" name="dialog" value="非常好" style="font-size: 26px; width: 256px;" maxlength="5">
-        </label>
+    <label>
+        <input id="content" name="dialog" value="非常好" style="font-size: 26px; width: 256px;" maxlength="5">
+    </label>
     <div id="container">
-        <canvas id="imageView" width="256" height="256"/>
+        <canvas id="imageView" width="256" height="256" />
     </div>
     <a href="javascript:download();" style="font-size: 26px;">儲存圖片</a>
     <script>
@@ -53,7 +53,6 @@
                         return;
                     }
 
-
                     img.addEventListener("load", function() {
                         clearCanvas();
                         context.drawImage(img, 0, 0);
@@ -80,7 +79,7 @@
                         doodle(185, 50);
                         evt.preventDefault();
                     }, false);   
-                }
+                } // end of init()
 
                 download = function() {
                     var image = canvas.toDataURL("image/png");
@@ -90,23 +89,22 @@
                     link.click();
                 }
 
-                var clearCanvas = function() {                
+                function clearCanvas() {                
                     context.clearRect(0, 0, canvas.width, canvas.height);
                     context.drawImage(img, 0, 0);      
-                };
+                }
 
                 var content = document.getElementById('content');
+
                 function doodle(x, y) {
                     clearCanvas();
                     var text = content.value.split('');
                     var size = 26;
-                    if (text.length == 3)
-                        size = 26
-                    else if (text.length == 4)
+                    if (text.length == 4)
                         size = 22
                     else if (text.length == 5)
                         size = 18
-                    context.font = size + "px Georgia";
+                    context.font = size + "px monospace";
 
                     for (var i = 0; i < text.length; i++) {
                         context.fillText(text[i], x, y + i * (size + 8));
@@ -117,10 +115,11 @@
                     doodle(185, 50);
                     evt.preventDefault();
                     return false;
-                }                
+                }
 
                 content.addEventListener('keyup', ev_doodle, false);
                 init();
+                doodle(185, 50);
             },
             false);
     }
