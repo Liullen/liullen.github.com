@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>count down</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+var timePointArr = new Array();
+var idArr = new Array();
+var descArr = new Array();
+function getDeltaText(day) {
+	var now = new Date();
+	var delta = day - now;
+	var absDelta = Math.abs(delta);
+	var text = 
+	Math.floor(absDelta / (24 * 3600 * 1000)) + ' days ' +
+	Math.floor(absDelta / (3600 * 1000))%24 + ' hours ' + 
+	Math.floor(absDelta / (60 * 1000))%60 + ' mins ' + 
+	Math.floor(absDelta / 1000)%60 + ' secs ';
+	
+	if (delta < 0)
+		text += ' after.';
+	else
+		text += ' left.';
+	return text;
+}
+
+function timedCount() {
+    $.each(idArr, function(i, elem) {
+		$('#' + elem).text(getDeltaText(timePointArr[i]));
+    });
+	t = setTimeout("timedCount()", 1000);
+}
+
+function initContentHtml() {
+	var contentHtml = "";
+	for (var i=0; i<idArr.length; i++) {
+		var itemHtml = "\n\t\t<div class=\"item\">" +
+				"<div class=\"item_name\">" + descArr[i] + "</div>" +
+				"<div class=\"item_time\" id=\"" + idArr[i] + "\"></div>" +
+			"</div>\n";
+		contentHtml += itemHtml;
+	}	
+	$('#content').html(contentHtml);
+}
+
+function addItem(date, id, desc) {
+	timePointArr.push(date);
+	idArr.push(id);
+	descArr.push(desc);
+}
+
+$(document).ready(function() {
+	/*
+	 *  addItem(日期, 元素id, 描述)
+	 *  月份是從0開始, ex: 2012/1/1 : new Date(2012, 0, 1, 0, 0, 0)
+	 */
+	addItem(new Date(2011, 08, 28, 0, 0, 0, 0), 'day_928', 'The First Day');
+//	addItem(new Date(2012, 01, 14, 0, 0, 0, 0), 'day_valentine', 'Valentine\'s day');
+//	addItem(new Date(2012, 01, 20, 0, 0, 0, 0), 'day_semester', 'Second semester');
+//	addItem(new Date(2012, 02, 10, 0, 0, 0, 0), 'day_exam', 'The Public officials exam');
+//	addItem(new Date(2012, 05, 01, 0, 0, 0, 0), 'day_breakup', 'The Day We Broke Up')
+	initContentHtml();
+	timedCount();
+})
+</script>
+<style type="text/css">
+body {
+	background-color: #6ADBD8;
+}
+
+#content_title {
+	width: 640px;
+	margin: 128px auto -14px auto; 
+	color: #000000;
+	font-size: 52px;
+	font-family: verdana;
+	text-shadow: 0px 0px 5px #FFFFFF;
+	font-weight: normal;
+}
+
+div#content_title span {
+	font-size: 84px;
+}
+
+#content {
+	width: 620px;
+	border: 10px solid #FFFFFF;
+	margin: 0 auto;
+	text-align: center;
+	background-color: #99ECEA;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.item {
+	width: 540px;
+	text-align: left;
+	font-size: 16px;
+	margin: 15px auto;
+	border: 1px solid #0ABAB5;
+	background-color: #C9FCFB;
+}
+
+.item_name {
+	font-family: verdana;
+	color: #FFFFFF;
+	font-size: 18px;
+	padding-top: 5px;
+	padding-left: 15px;
+	border-right: 1px solid #0ABAB5;
+	background-color: #0ABAB5;
+}
+
+.item_time {
+	font-family: verdana;
+	text-align: right;
+	padding-top: 5px;
+	color: #000000;
+}
+
+.small {
+	font-size: 8px;
+	color: #ccc;
+	width: 640px;
+	margin: 0 auto;
+	margin-top: -13px;
+	text-align: right;
+}
+
+
+</style>
+</head>
+<body>
+<div id="content_title"><span>C</span>OUNT<span>D</span>OWN</div>
+<div id="content">
+</div>
+<div class="small">by liullen</div>
+</body></html>

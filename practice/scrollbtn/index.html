@@ -1,0 +1,48 @@
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+
+.top {
+	display: block;
+	width: 100px;
+	height: 100px;
+	background-color: #eee;
+	overflow: hidden;
+}
+
+.top-inside {
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	transform: translateY(0);
+	transition: all ease 0.25s;
+	text-align: center;
+}
+
+.top-inside:hover {
+	transform: translateY(-100px);
+	transition: all ease 0.25s;
+}
+
+.top-inside::after {
+	width: 100px;
+	height: 100px;
+	line-height: 100px;
+	content: 'top';
+	display: block;
+	text-align: center;
+}
+
+	</style>
+</head>
+<body>
+
+<div class="top">
+	<div class="top-inside">
+		top
+	</div>
+</div>
+
+</body>
+</html>

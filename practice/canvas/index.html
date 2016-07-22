@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<style type="text/css">
+		#canvas-div {
+			border: 1px solid #000;
+		}
+	</style>
+	<script type="text/javascript">
+
+	var colorArr = ['red', 'orange', 'grey', 'blue', 'green', 'yellow', 'pink', 'azure', 'red', 'red', 'green', 'green', 'green', 'green'];
+
+	function getRandomColor() {
+		var rd = Math.random() * colorArr.length;
+		var re_int = Math.floor(rd);
+		return colorArr[re_int];
+	}
+
+
+	$(document).ready(function() {
+
+		var reso = 2;
+		var iSize = 20;
+		var sh = reso * iSize;
+
+
+		function draw(mx, my) {
+			var canvas_div = document.getElementById("canvas-div");
+			var ctx = canvas_div.getContext("2d");
+		
+
+			var x, y, w, h, color;
+			x = mx;
+			y = my;
+			w = 1;
+			h = 1;
+
+			color = "green";
+
+
+			ctx.fillStyle = getRandomColor();
+
+			for(i=0; i<iSize; i++) {
+
+				ctx.fillRect(sh + x + i*reso, y + i*reso, w*reso, h*reso);
+				ctx.fillRect(sh + x - i*reso, y + i*reso, w*reso, h*reso);
+
+				ctx.fillRect(sh + x - i*reso, y + sh, w*reso, h*reso);
+				ctx.fillRect(sh + x + i*reso, y + sh, w*reso, h*reso);
+
+				ctx.fillRect(sh + x + i*reso, sh + y + i*reso, w*reso, h*reso);
+				ctx.fillRect(sh + x - i*reso, sh + y + i*reso, w*reso, h*reso);
+
+				ctx.fillRect(sh + x - i*reso, y + sh*2, w*reso, h*reso);
+				ctx.fillRect(sh + x + i*reso, y + sh*2, w*reso, h*reso);
+
+				ctx.fillRect(sh + x + i*reso, sh*2 + y + i*reso, w*reso, h*reso);
+				ctx.fillRect(sh + x - i*reso, sh*2 + y + i*reso, w*reso, h*reso);
+
+				ctx.fillRect(sh + x - i*reso, y + sh*3, w*reso, h*reso);
+				ctx.fillRect(sh + x + i*reso, y + sh*3, w*reso, h*reso);
+
+				w*=2;
+				ctx.fillRect(sh + x, sh*3 + y + i*reso, w*reso, h*reso);
+				w/=2;
+
+				ctx.fillStyle = getRandomColor();
+			}
+		}
+
+		$(document).mousedown(function(e) {
+			draw(e.offsetX - iSize*2, e.offsetY);
+		});
+
+	});
+	</script>
+
+
+</head>
+<body>
+	<h1>canvas demo</h1>
+	<canvas id="canvas-div" width="1024" height="600">
+	</canvas>
+</body>
+</html>

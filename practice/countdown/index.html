@@ -1,0 +1,111 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-TW"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>count down</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+<script type="text/javascript">
+var timePointArr = new Array();
+var idArr = new Array();
+var descArr = new Array();
+
+function getDeltaText(day) {
+	var now = new Date();
+	var delta = day - now;
+	var absDelta = Math.abs(delta);
+	var text = 
+	Math.floor(absDelta / (24 * 3600 * 1000)) + ' days ' +
+	Math.floor(absDelta / (3600 * 1000))%24 + ' hours ' + 
+	Math.floor(absDelta / (60 * 1000))%60 + ' mins ' + 
+	Math.floor(absDelta / 1000)%60 + ' secs ';
+	
+	if (delta < 0)
+		text += ' after.';
+	else
+		text += ' left.';
+	return text;
+}
+
+function getStaticText(start, end) {
+	var delta = start - end;
+	var absDelta = Math.abs(delta);
+	var text = 
+	Math.floor(absDelta / (24 * 3600 * 1000)) + ' days ' +
+	Math.floor(absDelta / (3600 * 1000))%24 + ' hours ' + 
+	Math.floor(absDelta / (60 * 1000))%60 + ' mins ' + 
+	Math.floor(absDelta / 1000)%60 + ' secs ';
+	
+	if (delta < 0)
+		text += ' after.';
+	else
+		text += ' left.';
+	return text;
+}
+
+function timedCount() {
+    $.each(idArr, function(i, elem) {
+		// $('#' + elem).text(getDeltaText(timePointArr[i]));
+		$('#' + elem).text(getStaticText(timePointArr[i], new Date(2012, 05, 01, 0, 0, 0, 0)));
+    });
+	t = setTimeout("timedCount()", 1000);
+}
+
+function initContentHtml() {
+	var contentHtml = "";
+	for (var i=0; i<idArr.length; i++) {
+		var itemHtml = "\n\t\t<div class=\"item\">" +
+				"<div class=\"item_name\">" + descArr[i] + "</div>" +
+				"<div class=\"item_time\" id=\"" + idArr[i] + "\"></div>" +
+			"</div>\n";
+		contentHtml += itemHtml;
+	}	
+	$('#content').html(contentHtml);
+}
+
+	/*
+	 *  addItem(Date, ID, Description)
+	 */
+function addItem(date, id, desc) {
+	timePointArr.push(date);
+	idArr.push(id);
+	descArr.push(desc);
+}
+
+function initStylesheet(styleURL) {
+	var url = styleURL;
+	if(document.createStyleSheet) {
+		try { document.createStyleSheet(url); } catch (e) { }
+	}
+	else {
+		var css;
+		css         = document.createElement('link');
+		css.rel     = 'stylesheet';
+		css.type    = 'text/css';
+		css.media   = "all";
+		css.href    = url;
+		document.getElementsByTagName("head")[0].appendChild(css);
+	}
+}
+
+function initHTML() {
+	var infrastructure = "<div id=\"content_title\"><span>C</span>OUNT<span>D</span>OWN</div>\n" + 
+	"<div id=\"content\"></div>\n" + 
+	"<div class=\"small\">\n" + 
+	"<a target=\"_blank\" class=\"secret\" href=\"https://dl.dropbox.com/u/34059676/memory.pdf\">memories</a>\n" + 
+	"<a target=\"_blank\" href=\"http://tinyw.in/sjU7\">Heart key pendant</a>\n" + 
+	"&nbsp;by liullen\n" + 
+	"</div>\n";
+	$('body').append(infrastructure);
+}
+
+$(document).ready(function() {
+	initStylesheet('style.css');
+	initHTML();
+	addItem(new Date(2011, 08, 28, 0, 0, 0, 0), 'day_first', 'The First Day');
+	initContentHtml();
+	timedCount();
+})
+</script>
+</head>
+<body>
+</body>
+</html>

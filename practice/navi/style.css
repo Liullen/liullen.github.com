@@ -1,0 +1,44 @@
+
+* {
+ padding: ;
+	margin: 0;
+}
+
+body {
+ color: #ccc;
+ background-color: #444;
+}
+
+div {
+ position: absolute;
+ top: 0;
+ left: 0;
+ width: 20%;
+}
+
+nav a {
+ color: #fff;
+ display: block;
+ font-size: 2em;
+ line-height: 1.5em;
+ font-family: sans-serif;
+ text-decoration: none;
+ padding: 0 10px;
+ -webkit-transition: all 100ms ease-in-out;
+ -moz-transition: all 100ms ease-in-out;
+ -ms-transition: all 100ms ease-in-out;
+ -o-transition: all 100ms ease-in-out;
+ transition: all 100ms ease-in-out;
+ margin: 1px;
+}
+
+nav a:hover {
+ -webkit-transition: all 100ms ease-in-out;
+ -moz-transition: all 100ms ease-in-out;
+ -ms-transition: all 100ms ease-in-out;
+ -o-transition: all 100ms ease-in-out;
+ transition: all 100ms ease-in-out;
+ font-size: 3em;
+ background-color: #00DBBF;
+ line-height: 1.6em;
+}
